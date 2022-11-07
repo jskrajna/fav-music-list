@@ -1,4 +1,5 @@
 import { Children, cloneElement } from "react";
+import { nanoid } from 'nanoid';
 
 export const SortBarItem = ({ name, children, className, state }) => {
     return (
@@ -15,7 +16,7 @@ const SortBar = ({ children, onClick, groupLabel, state }) => {
     return (
         <div className="inline-flex shadow-sm" role="group" aria-label={groupLabel} onClick={(e) => onClick(e)}>
             {arrayChildren.map(el => {
-                return cloneElement(el, { state: state })
+                return cloneElement(el, { state: state, key: nanoid() })
             })}
         </div>
     );

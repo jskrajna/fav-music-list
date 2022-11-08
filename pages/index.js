@@ -1,15 +1,13 @@
-// styles
-import './App.scss';
 // icons
 import { FingerPrintIcon, ClockIcon, UserIcon, ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline'
 // hooks
 import { useEffect, useState } from 'react';
 // components
-import { SortBarItem } from './components/SortBar/SortBar';
-import SortBar from './components/SortBar/SortBar';
-import List from './components/List';
-import Form from './components/Form';
-import LayoutSwitcher from './components/LayoutSwitcher';
+import { SortBarItem } from '../components/SortBar/SortBar';
+import SortBar from '../components/SortBar/SortBar';
+import List from '../components/List';
+import Form from '../components/Form';
+import LayoutSwitcher from '../components/LayoutSwitcher';
 
 const DEFAULT_SORT_STATE = Object.freeze({
   key: 'id',
@@ -18,7 +16,9 @@ const DEFAULT_SORT_STATE = Object.freeze({
 
 
 const addLocalStorageItems = (list) => {
-  localStorage.setItem('list', JSON.stringify(list));
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('list', JSON.stringify(list));
+  }
 }
 
 const sortMethods = (key) => {
@@ -33,15 +33,19 @@ const sortMethods = (key) => {
 }
 
 const getLocalStorageItems = (storageItem) => {
-  if (localStorage.getItem(storageItem) !== null) {
-    return JSON.parse(localStorage.getItem(storageItem));
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem(storageItem) !== null) {
+      return JSON.parse(localStorage.getItem(storageItem));
+    }
   }
   return false;
 }
 
-const App = () => {
+const Home = () => {
   const [value, setValue] = useState('');
-  const [list, setList] = useState(getLocalStorageItems('list') ? getLocalStorageItems('list') : []);
+  const [list, setList] = useState([]);
+
+  // const [list, setList] = useState(getLocalStorageItems('list') ? getLocalStorageItems('list') : []);
   const [layout, setLayout] = useState('list');
   const [sortState, setSortState] = useState(DEFAULT_SORT_STATE);
 
@@ -137,4 +141,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default Home;

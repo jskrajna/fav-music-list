@@ -45,8 +45,8 @@ const getLocalStorageItems = (storageItem) => {
   }
   return false;
 }
-
 const Home = ({ data }) => {
+  const getPreData = getLocalStorageItems('list');
   const { locale, locales, asPath } = useRouter();
 
   const [value, setValue] = useState('');
@@ -55,10 +55,8 @@ const Home = ({ data }) => {
   const [sortState, setSortState] = useState(DEFAULT_SORT_STATE);
 
 
-
-
   useEffect(() => {
-    setList(getLocalStorageItems('list'));
+    setList(getPreData);
   }, [])
 
   const handleItemAdd = () => {
@@ -108,7 +106,9 @@ const Home = ({ data }) => {
           {data !== undefined && (
             <div className='bg-teal-800 p-4 text-white rounded-xl hidden md:inline-block mb-5 ml-auto mr-0 min-h-fit'>
               <h4 className={'text-white text-s font-bold'}>Daily joke</h4>
-              <p className={'text-xs'}>{data.value}</p>
+              <p className={'text-xs'}>{data.setup}</p>
+              <p className={'text-xs'}>{data.punchline}</p>
+
             </div>
           )}
         </div>
@@ -178,13 +178,12 @@ export async function getServerSideProps() {
   const options = {
     method: 'GET',
     headers: {
-      accept: 'application/json',
       'X-RapidAPI-Key': 'da5f1f76b6msh86571c74ba9463bp196a4bjsn03f4d0a331c5',
-      'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com'
-    },
+      'X-RapidAPI-Host': 'joke110.p.rapidapi.com'
+    }
   };
 
-  const res = await fetch('https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random', options);
+  const res = await fetch('https://joke110.p.rapidapi.com/random_joke', options)
   const data = await res.json();
 
   return {

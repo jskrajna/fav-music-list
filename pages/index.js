@@ -9,6 +9,9 @@ import List from '../components/List';
 import Form from '../components/Form';
 import LayoutSwitcher from '../components/LayoutSwitcher';
 
+
+
+
 const DEFAULT_SORT_STATE = Object.freeze({
   key: 'id',
   direction: 'asc',
@@ -41,7 +44,7 @@ const getLocalStorageItems = (storageItem) => {
   return false;
 }
 
-const Home = () => {
+const Home = ({ data }) => {
   const [value, setValue] = useState('');
   const [list, setList] = useState([]);
 
@@ -91,8 +94,16 @@ const Home = () => {
   }, [list])
 
   return (
-    <div className="bg-teal-900 min-h-screen" >
+    <div className="bg-teal-900 min-h-screen">
       <div className='container mx-auto py-14 px-6'>
+        {data !== undefined && (
+          <div className='text-right'>
+            <div className='bg-teal-800 p-4 text-white rounded-xl hidden md:inline-block mb-5 ml-auto mr-0 min-h-fit'>
+              <h4 className={'text-white text-s font-bold'}>Daily joke</h4>
+              <p className={'text-xs'}>{data.value}</p>
+            </div>
+          </div>
+        )}
         <h1 className='text-5xl font-extrabold text-white mb-5'>FavMusicList</h1>
         <div className='flex flex-wrap items-start gap-6'>
           <div className='bg-teal-100 rounded-xl shadow-xl inline-block pb-8'>
@@ -142,3 +153,23 @@ const Home = () => {
 }
 
 export default Home;
+
+
+export async function getServerSideProps() {
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'X-RapidAPI-Key': 'da5f1f76b6msh86571c74ba9463bp196a4bjsn03f4d0a331c5',
+      'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com'
+    },
+  };
+
+  const res = await fetch('https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random', options);
+  const data = await res.json();
+
+  return {
+    props: { data }
+  }
+}

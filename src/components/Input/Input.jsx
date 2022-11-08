@@ -1,7 +1,7 @@
-const Input = ({ placeholder = '', type = 'text', value, onChange, ...rest }) => {
+const Input = ({ value, placeholder = '', type = 'text', onChange, ...rest }) => {
 
     return (
-        <input type={type} placeholder={placeholder} value={value} onChange={onChange} {...rest}></input>
+        <input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} {...rest}></input >
     );
 };
 

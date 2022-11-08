@@ -1,5 +1,6 @@
-import { Children, cloneElement } from "react";
+// utils
 import { nanoid } from 'nanoid';
+import { Children, cloneElement } from "react";
 
 export const SortBarItem = ({ name, children, className, state }) => {
     return (

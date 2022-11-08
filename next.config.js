@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
     images: {
         loader: "default",
         domains: ["localhost"],
@@ -10,6 +9,7 @@ const nextConfig = {
     {
         locales: ["pl", "en"],
         defaultLocale: "pl",
+        localeDetection: false,
     }
 }
 
